@@ -12,7 +12,7 @@ const isOptimistState = state => state && Object.keys(state).length === 3
 export const ensureState = state => isOptimistState(state) ? state.current : state;
 
 const createState = state => ({
-  beforeState: undefined,
+  beforeState: null,
   history: [],
   current: state
 });
@@ -28,7 +28,7 @@ const applyCommit = (state, targetActionIndex, reducer) => {
       return {
         ...state,
         history: [],
-        beforeState: undefined
+        beforeState: null
       };
     }
     // Create a new history starting with the next one
@@ -73,7 +73,7 @@ const applyRevert = (state, targetActionIndex, reducer) => {
         ...state,
         history: [],
         current: historyWithoutRevert.reduce((s, action) => reducer(s, action), beforeState),
-        beforeState: undefined
+        beforeState: null
       };
     }
     newHistory = historyWithoutRevert.slice(nextOptimisticIndex);
